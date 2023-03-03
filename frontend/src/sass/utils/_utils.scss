@@ -1,38 +1,53 @@
-.card{
-     width: 375px;
-     padding: 15px 20px;
-     background-color: #1c3f8fd4;
-     box-shadow: 0px 8px 25px #f5f0f0;
- }
- .form-group{
-     margin: 10px 0px;
-     display: flex;
-     flex-direction: column;
- }
- .form-control{
-     padding: 12px;
-     border: none;
-     outline: none;
-     background-color: #0a0e1585;
-     &::placeholder{
-         color: #fff;
-         font-weight: 400;
-     }
- }
- label{
-     margin-bottom: 5px;
-     color: #fff;
-     font-weight: 500;
- }
- .btn{
-     outline: none;
-     color: #fff;
-     text-transform: uppercase;
-     padding: 12px;
-     text-align: center;
-     background-color: #101a23eb;
-     border: none;
-     cursor: pointer;
- }
- 
- 
+.card {
+    width: 800px;
+    background-color: #fff;
+    box-shadow: 0 8px 20px 0 rgb(0, 0, 0 / 15%);
+    border-radius: 3px;
+    overflow: hidden;
+
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+
+}
+
+.form-control {
+    padding: 12px;
+    border: none;
+    outline: none;
+    background: #e5e5e5;
+    font-size: 17px;
+    border-radius: 3px;
+
+    &::placeholder {
+        color: #000;
+        font-weight: 400;
+    }
+}
+
+
+.btn {
+    outline: none;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 12px;
+    text-align: center;
+    background-color: #ff4b5a;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    border-radius: 5px;
+
+    &:hover {
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: "836px") {
+    .card {
+        width: 600px;
+    }
+}
