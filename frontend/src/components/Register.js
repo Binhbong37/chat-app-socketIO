@@ -24,16 +24,19 @@ const Register = () => {
         image: '',
     });
 
-    const [loadImage, setLoadImage] = useState('');
+    const [loadImage, setLoadImage] = useState(
+        'https://pixsector.com/cache/517d8be6/av5c8336583e291842624.png'
+    );
 
-    const inputHendle = (e) => {
+    const inputHandle = (e) => {
         setstate({
             ...state,
             [e.target.name]: e.target.value,
         });
     };
 
-    const fileHendle = (e) => {
+    const fileHandle = (e) => {
+        // Lấy data lưu và state ở trên
         if (e.target.files.length !== 0) {
             setstate({
                 ...state,
@@ -41,6 +44,7 @@ const Register = () => {
             });
         }
 
+        // Hiển thị ra màn hình ô nhỏ
         const reader = new FileReader();
         reader.onload = () => {
             setLoadImage(reader.result);
@@ -49,18 +53,17 @@ const Register = () => {
     };
 
     const register = (e) => {
-        const { userName, email, password, confirmPassword, image } = state;
         e.preventDefault();
+        const { userName, email, password, confirmPassword, image } = state;
 
         const formData = new FormData();
-
         formData.append('userName', userName);
         formData.append('email', email);
         formData.append('password', password);
         formData.append('confirmPassword', confirmPassword);
         formData.append('image', image);
 
-        dispatch(userRegister(formData));
+        dispatch(userRegister(state));
     };
 
     useEffect(() => {
@@ -89,7 +92,7 @@ const Register = () => {
                         <div className="form-group">
                             <input
                                 type="text"
-                                onChange={inputHendle}
+                                onChange={inputHandle}
                                 name="userName"
                                 value={state.userName}
                                 className="form-control"
@@ -101,7 +104,7 @@ const Register = () => {
                         <div className="form-group">
                             <input
                                 type="email"
-                                onChange={inputHendle}
+                                onChange={inputHandle}
                                 name="email"
                                 value={state.email}
                                 className="form-control"
@@ -113,7 +116,7 @@ const Register = () => {
                         <div className="form-group">
                             <input
                                 type="password"
-                                onChange={inputHendle}
+                                onChange={inputHandle}
                                 name="password"
                                 value={state.password}
                                 className="form-control"
@@ -125,7 +128,7 @@ const Register = () => {
                         <div className="form-group">
                             <input
                                 type="password"
-                                onChange={inputHendle}
+                                onChange={inputHandle}
                                 name="confirmPassword"
                                 value={state.confirmPassword}
                                 className="form-control"
@@ -147,7 +150,7 @@ const Register = () => {
                                     <label htmlFor="image">Select Image</label>
                                     <input
                                         type="file"
-                                        onChange={fileHendle}
+                                        onChange={fileHandle}
                                         name="image"
                                         className="form-control"
                                         id="image"
