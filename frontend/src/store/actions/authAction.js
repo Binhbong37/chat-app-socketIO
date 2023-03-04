@@ -1,10 +1,10 @@
 import axios from 'axios';
-// import {
-//     REGISTER_FAIL,
-//     REGISTER_SUCCESS,
-//     USER_LOGIN_SUCCESS,
-//     USER_LOGIN_FAIL,
-// } from '../types/authType';
+import {
+    REGISTER_FAIL,
+    REGISTER_SUCCESS,
+    USER_LOGIN_SUCCESS,
+    USER_LOGIN_FAIL,
+} from '../types/authType';
 
 export const userRegister = (data) => {
     return async (dispatch) => {
@@ -19,7 +19,15 @@ export const userRegister = (data) => {
                 data,
                 config
             );
-            console.log(response);
+            console.log('ACTION: ', response);
+            localStorage.setItem('authToken', response.data.token);
+            dispatch({
+                type: REGISTER_SUCCESS,
+                payload: {
+                    successMessage: response.data.successMessage,
+                    token: response.data.token,
+                },
+            });
         } catch (error) {
             console.log(error.response.data);
         }

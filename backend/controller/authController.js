@@ -78,7 +78,13 @@ module.exports.userRegister = (req, res) => {
 
                             // tao duoc nguoi dung roi thi tao token
                             const token = jwt.sign(
-                                { id: createUser._id },
+                                {
+                                    id: createUser._id,
+                                    userName: createUser.userName,
+                                    email: createUser.email,
+                                    image: createUser.image,
+                                    registerTime: createUser.createdAt,
+                                },
                                 process.env.SECRET,
                                 { expiresIn: process.env.TOKEN_EXP }
                             );
@@ -100,6 +106,14 @@ module.exports.userRegister = (req, res) => {
                                     message: 'ok',
                                     token,
                                 });
+                        } else {
+                            res.status(500).json({
+                                error: {
+                                    errorMessage: [
+                                        'Internal Server Error (read file)',
+                                    ],
+                                },
+                            });
                         }
                     });
                 }
