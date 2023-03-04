@@ -103,7 +103,7 @@ module.exports.userRegister = (req, res) => {
                             res.status(201)
                                 .cookie('authToken', token, options)
                                 .json({
-                                    message: 'ok',
+                                    message: 'Register success!',
                                     token,
                                 });
                         } else {

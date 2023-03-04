@@ -45,7 +45,7 @@ export const authReducer = (state = authState, action) => {
         case USER_LOGIN_FAIL:
             return {
                 ...state,
-                error: payload.error,
+                error: payload.errorMess,
                 authenticate: false,
                 myInfo: '',
                 loading: true,
@@ -53,6 +53,7 @@ export const authReducer = (state = authState, action) => {
         case REGISTER_SUCCESS:
         case USER_LOGIN_SUCCESS:
             const myInfo = tokenDecode(payload.token);
+
             return {
                 ...state,
                 myInfo: myInfo,

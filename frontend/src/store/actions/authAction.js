@@ -19,17 +19,22 @@ export const userRegister = (data) => {
                 data,
                 config
             );
-            console.log('ACTION: ', response);
+
             localStorage.setItem('authToken', response.data.token);
             dispatch({
                 type: REGISTER_SUCCESS,
                 payload: {
-                    successMessage: response.data.successMessage,
+                    successMessage: response.data.message,
                     token: response.data.token,
                 },
             });
         } catch (error) {
-            console.log(error.response.data);
+            dispatch({
+                type: REGISTER_FAIL,
+                payload: {
+                    errorMess: error.response.data.error.errorMessage,
+                },
+            });
         }
     };
 
