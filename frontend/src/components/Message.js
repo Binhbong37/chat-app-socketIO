@@ -1,25 +1,54 @@
-import moment from 'moment';
+// import moment from 'moment';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { FaRegCheckCircle } from 'react-icons/fa';
+// import { useSelector } from 'react-redux';
+// import { FaRegCheckCircle } from 'react-icons/fa';
 
 const Message = () => {
     return (
-        <div className="messager">
-            <div className="row">
-                <div className="col-3">
-                    <div className="left-side">
-                        <div className="top">
-                            <div className="image-name">
-                                <img
-                                    src="/image/38672voi hoa sen.jpg"
-                                    alt="coverP"
-                                />
-                            </div>
-                        </div>
+        <div className="message-show">
+            {/* One message */}
+            <div className="my-message">
+                <div className="image-message">
+                    <div className="my-text">
+                        <p className="message-text">How are u?</p>
                     </div>
-                    <div className="center-side"></div>
-                    <div className="right-side"></div>
+                </div>
+                <div className="time">07 March 2023</div>
+            </div>
+
+            {/* Two mess */}
+            <div className="fd-message">
+                <div className="image-message-time">
+                    <img src="/image/5.jpg" alt="coverP" />
+                    <div className="message-time">
+                        <div className="fd-text">
+                            <p className="message-text">I am fine</p>
+                        </div>
+                        <div className="time">07 March 2023</div>
+                    </div>
+                </div>
+            </div>
+
+            {/* One message */}
+            <div className="my-message">
+                <div className="image-message">
+                    <div className="my-text">
+                        <p className="message-text">What are u doing now?</p>
+                    </div>
+                </div>
+                <div className="time">07 March 2023</div>
+            </div>
+
+            {/* Two mess */}
+            <div className="fd-message">
+                <div className="image-message-time">
+                    <img src="/image/5.jpg" alt="coverP" />
+                    <div className="message-time">
+                        <div className="fd-text">
+                            <p className="message-text">I'm study code.</p>
+                        </div>
+                        <div className="time">07 March 2023</div>
+                    </div>
                 </div>
             </div>
         </div>
