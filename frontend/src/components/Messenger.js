@@ -446,7 +446,7 @@ import { FaEllipsisH, FaEdit, FaSistrix, FaSignOutAlt } from 'react-icons/fa';
 
 const Messenger = () => {
     return (
-        <div className="messager">
+        <div className="messenger">
             <div className="row">
                 <div className="col-3">
                     <div className="left-side">
@@ -458,26 +458,30 @@ const Messenger = () => {
                                 <div className="name">
                                     <h3>Be Anh</h3>
                                 </div>
-                                <div className="icons">
-                                    <div className="icon">
-                                        <FaEllipsisH />
-                                    </div>
-                                    <div className="icon">
-                                        <FaEdit />
-                                    </div>
+                            </div>
+                            <div className="icons">
+                                <div className="icon">
+                                    <FaEllipsisH />
+                                </div>
+                                <div className="icon">
+                                    <FaEdit />
                                 </div>
                             </div>
-                            <div className="friend-search">
-                                <div className="search">
-                                    <button>
-                                        <FaSistrix />
-                                    </button>
-                                    <input
-                                        placeholder="search"
-                                        type={'text'}
-                                        className="form-control"
-                                    />
-                                </div>
+                        </div>
+                        <div className="friend-search">
+                            <div className="search">
+                                <button>
+                                    <FaSistrix />
+                                </button>
+                                <input
+                                    placeholder="search"
+                                    type={'text'}
+                                    className="form-control"
+                                />
+                            </div>
+                            <div className="active-friends"></div>
+                            <div className="friends">
+                                <div className="hover-friend"></div>
                             </div>
                         </div>
                     </div>
