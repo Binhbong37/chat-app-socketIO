@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaEllipsisH, FaEdit, FaSistrix, FaSignOutAlt } from 'react-icons/fa';
-// import ActiveFriend from './ActiveFriend';
-// import Friends from './Friends';
+import ActiveFriend from './ActiveFriend';
+import Friends from './Friends';
 // import RightSide from './RightSide';
 // import {useDispatch ,useSelector } from 'react-redux';
 // import { getFriends,messageSend,getMessage,ImageMessageSend,seenMessage,updateMessage,getTheme,themeSet } from '../store/actions/messengerAction';
@@ -479,9 +479,40 @@ const Messenger = () => {
                                     className="form-control"
                                 />
                             </div>
-                            <div className="active-friends"></div>
-                            <div className="friends">
-                                <div className="hover-friend"></div>
+                        </div>
+                        <div className="active-friends">
+                            <ActiveFriend />
+                        </div>
+                        <div className="friends">
+                            <div className="hover-friend active">
+                                <Friends />
+                            </div>
+                            <div className="hover-friend">
+                                <Friends />
+                            </div>
+                            <div className="hover-friend">
+                                <Friends />
+                            </div>
+                            <div className="hover-friend">
+                                <Friends />
+                            </div>
+                            <div className="hover-friend">
+                                <Friends />
+                            </div>
+                            <div className="hover-friend">
+                                <Friends />
+                            </div>
+                            <div className="hover-friend">
+                                <Friends />
+                            </div>
+                            <div className="hover-friend">
+                                <Friends />
+                            </div>
+                            <div className="hover-friend">
+                                <Friends />
+                            </div>
+                            <div className="hover-friend">
+                                <Friends />
                             </div>
                         </div>
                     </div>
