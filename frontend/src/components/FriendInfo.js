@@ -1,24 +1,18 @@
 import React from 'react';
-import { FaCaretSquareDown, FaEdit, FaSistrix } from 'react-icons/fa';
+import { FaCaretSquareDown } from 'react-icons/fa';
 
-const FriendInfo = ({ currentfriend, activeUser, message }) => {
+const FriendInfo = () => {
     return (
         <div className="friend-info">
             <input type="checkbox" id="gallery" />
             <div className="image-name">
                 <div className="image">
-                    <img src={`./image/${currentfriend.image}`} alt="" />
+                    <img src="/image/5.jpg" alt="coverP" />
                 </div>
-                {activeUser &&
-                activeUser.length > 0 &&
-                activeUser.some((u) => u.userId === currentfriend._id) ? (
-                    <div className="active-user">Active</div>
-                ) : (
-                    ''
-                )}
+                <div className="active-user">Active</div>
 
                 <div className="name">
-                    <h4>{currentfriend.userName} </h4>
+                    <h4>Name </h4>
                 </div>
             </div>
 
@@ -43,18 +37,11 @@ const FriendInfo = ({ currentfriend, activeUser, message }) => {
             </div>
 
             <div className="gallery">
-                {message && message.length > 0
-                    ? message.map(
-                          (m, index) =>
-                              m.message.image && (
-                                  <img
-                                      key={index}
-                                      src={`./image/${m.message.image}`}
-                                      alt="imgFre"
-                                  />
-                              )
-                      )
-                    : ''}
+                <img src="/image/5.jpg" alt="coverP" />
+                <img src="/image/5.jpg" alt="coverP" />
+                <img src="/image/5.jpg" alt="coverP" />
+                <img src="/image/5.jpg" alt="coverP" />
+                <img src="/image/5.jpg" alt="coverP" />
             </div>
         </div>
     );
