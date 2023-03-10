@@ -51,6 +51,18 @@ const Message = () => {
                     </div>
                 </div>
             </div>
+
+            {/* oNE */}
+            <div className="my-message">
+                <div className="image-message">
+                    <div className="my-text">
+                        <p className="message-text">
+                            <img src="/image/5.jpg" alt="coverP" />
+                        </p>
+                    </div>
+                </div>
+                <div className="time">07 March 2023</div>
+            </div>
         </div>
     );
 };
