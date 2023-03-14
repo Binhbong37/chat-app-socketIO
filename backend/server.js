@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 
 const databaseConnect = require('./config/database');
 const authRoute = require('./routes/authRoute');
+const messengerRoute = require('./routes/messengerRoute');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 5000;
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/api', authRoute);
+app.use('/api', messengerRoute);
 
 databaseConnect();
 

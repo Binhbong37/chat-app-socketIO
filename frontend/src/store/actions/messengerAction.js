@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const getFriends = () => async (dispatch) => {
     try {
-        const response = await axios.get('/api/messenger/get-friends');
+        const response = await axios.get('/api/get-friends');
         console.log(response);
     } catch (error) {
         console.log(error.response.data);

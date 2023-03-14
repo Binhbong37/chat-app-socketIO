@@ -18,8 +18,9 @@ const Messenger = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getFriends);
+        dispatch(getFriends());
     }, [dispatch]);
+
     return (
         <div className="messenger">
             <div className="row">
