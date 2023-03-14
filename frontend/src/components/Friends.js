@@ -2,18 +2,21 @@ import React from 'react';
 
 // import { FaRegCheckCircle } from 'react-icons/fa';
 
-const Friends = (props) => {
+const Friends = ({ friends }) => {
     return (
         <div className="friend">
             <div className="friend-image">
                 <div className="image">
-                    <img src={'/image/8.jpg'} alt="" />
+                    <img
+                        src={`image/${friends.image}`}
+                        alt={friends.userName}
+                    />
                 </div>
             </div>
 
             <div className="friend-name-seen">
                 <div className="friend-name">
-                    <h4>Binh</h4>
+                    <h4>{friends.userName}</h4>
                     <div className="msg-time"></div>
                 </div>
             </div>
