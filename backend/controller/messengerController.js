@@ -44,11 +44,16 @@ const getLastMessage = async (myId, fdId) => {
 };
 
 module.exports.getFriends = async (req, res) => {
+    const myId = req.myId;
+
     try {
         const friendGet = await User.find();
+        const filterMy = friendGet.filter(
+            (fr) => fr._id.toString() !== myId.toString()
+        );
         res.status(200).json({
             success: true,
-            friends: friendGet,
+            friends: filterMy,
         });
     } catch (error) {
         res.status(500).json({
