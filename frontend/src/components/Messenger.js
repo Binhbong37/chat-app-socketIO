@@ -45,7 +45,7 @@ const Messenger = () => {
         e.preventDefault();
         const data = {
             senderName: myInfo.userName,
-            reserveId: currentFriends._id,
+            reseverId: currentFriends._id,
             message: newMessage ? newMessage : '❤️',
         };
         dispatch(messageSend(data));

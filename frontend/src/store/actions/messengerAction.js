@@ -22,6 +22,7 @@ export const getFriends = () => async (dispatch) => {
 export const messageSend = (data) => async (dispatch) => {
     try {
         const response = await axios.post('/api/send-message', data);
+
         dispatch({
             type: MESSAGE_SEND_SUCCESS,
             payload: {
