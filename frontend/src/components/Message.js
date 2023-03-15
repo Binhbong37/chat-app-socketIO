@@ -3,14 +3,14 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 // import { FaRegCheckCircle } from 'react-icons/fa';
 
-const Message = ({ message, currentFriends }) => {
+const Message = ({ message, currentFriends, scrollRef }) => {
     const { myInfo } = useSelector((state) => state.auth);
     return (
         <div className="message-show">
             {message && message.length > 0
                 ? message.map((mess) =>
                       mess.senderId === myInfo.id ? (
-                          <div className="my-message">
+                          <div className="my-message" ref={scrollRef}>
                               <div className="image-message">
                                   <div className="my-text">
                                       <p className="message-text">
@@ -21,7 +21,7 @@ const Message = ({ message, currentFriends }) => {
                               <div className="time">07 March 2023</div>
                           </div>
                       ) : (
-                          <div className="fd-message">
+                          <div className="fd-message" ref={scrollRef}>
                               <div className="image-message-time">
                                   <img
                                       src={`/image/${currentFriends.image}`}

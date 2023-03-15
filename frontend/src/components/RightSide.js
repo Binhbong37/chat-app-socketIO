@@ -10,6 +10,7 @@ const RightSide = ({
     newMessage,
     submitInput,
     message,
+    scrollRef,
 }) => {
     return (
         <div className="col-9">
@@ -47,6 +48,7 @@ const RightSide = ({
                             <Message
                                 message={message}
                                 currentFriends={currentFriends}
+                                scrollRef={scrollRef}
                             />
                             <MessageSend
                                 newMessage={newMessage}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { FaEllipsisH, FaEdit, FaSistrix, FaSignOutAlt } from 'react-icons/fa';
 import ActiveFriend from './ActiveFriend';
 import Friends from './Friends';
@@ -19,6 +19,7 @@ import {
 // import sendingSound from '../audio/sending.mp3';
 
 const Messenger = () => {
+    const scrollRef = useRef();
     const [currentFriends, setCurrentFriends] = useState('');
 
     // take message
@@ -47,6 +48,11 @@ const Messenger = () => {
         dispatch(getMessage(currentFriends._id));
     }, [dispatch, currentFriends?._id]);
 
+    // Scroll
+    useEffect(() => {
+        console.log('UE Scroll');
+        scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [message]);
     // handle new massage
     const handleInputValue = (e) => {
         setNewMessage(e.target.value);
@@ -129,6 +135,7 @@ const Messenger = () => {
                         newMessage={newMessage}
                         submitInput={submitInput}
                         message={message}
+                        scrollRef={scrollRef}
                     />
                 ) : (
                     'Please select your friend'
