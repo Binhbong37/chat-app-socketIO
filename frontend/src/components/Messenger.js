@@ -5,7 +5,7 @@ import Friends from './Friends';
 import RightSide from './RightSide';
 import { useDispatch, useSelector } from 'react-redux';
 // import { getFriends,messageSend,getMessage,ImageMessageSend,seenMessage,updateMessage,getTheme,themeSet } from '../store/actions/messengerAction';
-import { getFriends } from '../store/actions/messengerAction';
+import { getFriends, messageSend } from '../store/actions/messengerAction';
 // import {userLogout } from '../store/actions/authAction';
 
 // import toast,{Toaster} from 'react-hot-toast';
@@ -23,7 +23,7 @@ const Messenger = () => {
     const dispatch = useDispatch();
     const { friends } = useSelector((state) => state.messenger);
     const { myInfo } = useSelector((state) => state.auth);
-    console.log(friends);
+
     useEffect(() => {
         dispatch(getFriends());
     }, [dispatch]);
@@ -43,7 +43,12 @@ const Messenger = () => {
     // take submit
     const submitInput = (e) => {
         e.preventDefault();
-        console.log(newMessage);
+        const data = {
+            senderName: myInfo.userName,
+            reserveId: currentFriends._id,
+            message: newMessage ? newMessage : '❤️',
+        };
+        dispatch(messageSend(data));
     };
     return (
         <div className="messenger">

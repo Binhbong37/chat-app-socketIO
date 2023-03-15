@@ -1,5 +1,8 @@
 // import {FRIEND_GET_SUCCESS,MESSAGE_GET_SUCCESS,MESSAGE_SEND_SUCCESS,SOCKET_MESSAGE,UPDATE_FRIEND_MESSAGE,MESSAGE_SEND_SUCCESS_CLEAR,SEEN_MESSAGE,DELIVARED_MESSAGE,UPDATE,MESSAGE_GET_SUCCESS_CLEAR,SEEN_ALL} from "../types/messengerType";
-import { FRIEND_GET_SUCCESS } from '../types/messengerType';
+import {
+    FRIEND_GET_SUCCESS,
+    MESSAGE_SEND_SUCCESS,
+} from '../types/messengerType';
 
 const messengerState = {
     friends: [],
@@ -19,6 +22,12 @@ export const messengerReducer = (state = messengerState, action) => {
                 ...state,
                 friends: payload.friends,
             };
+        case MESSAGE_SEND_SUCCESS:
+            return {
+                ...state,
+                mesageSendSuccess: true,
+                message: [...state.message, payload.message],
+            };
 
         default:
             return state;
@@ -31,26 +40,11 @@ export const messengerReducer = (state = messengerState, action) => {
     //           }
     //      }
 
-    //      if(type === FRIEND_GET_SUCCESS){
-    //           return {
-    //                ...state,
-    //                friends : payload.friends
-    //           }
-    //      }
-
     //      if(type === MESSAGE_GET_SUCCESS){
     //           return {
     //                ...state,
     //                message_get_success : true,
     //                message : payload.message
-    //           }
-    //      }
-
-    //      if(type === MESSAGE_SEND_SUCCESS){
-    //           return {
-    //                ...state,
-    //                mesageSendSuccess : true,
-    //                message : [...state.message,payload.message]
     //           }
     //      }
 
