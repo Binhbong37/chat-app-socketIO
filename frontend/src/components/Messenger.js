@@ -91,7 +91,11 @@ const Messenger = () => {
                                 ? friends.map((fr) => (
                                       <div
                                           key={fr._id}
-                                          className="hover-friend"
+                                          className={
+                                              currentFriends._id === fr._id
+                                                  ? 'hover-friend active'
+                                                  : 'hover-friend'
+                                          }
                                           onClick={() => setCurrentFriends(fr)}
                                       >
                                           <Friends friends={fr} />
