@@ -16,7 +16,10 @@ import { getFriends } from '../store/actions/messengerAction';
 
 const Messenger = () => {
     const [currentFriends, setCurrentFriends] = useState('');
-    console.log({ currentFriends });
+
+    // take message
+    const [newMessage, setNewMessage] = useState('');
+
     const dispatch = useDispatch();
     const { friends } = useSelector((state) => state.messenger);
     const { myInfo } = useSelector((state) => state.auth);
@@ -25,6 +28,23 @@ const Messenger = () => {
         dispatch(getFriends());
     }, [dispatch]);
 
+    // Get if have Friends
+    useEffect(() => {
+        if (friends && friends.length > 0) {
+            setCurrentFriends(friends[0]);
+        }
+    }, [friends]);
+
+    // handle new massage
+    const handleInputValue = (e) => {
+        setNewMessage(e.target.value);
+    };
+
+    // take submit
+    const submitInput = (e) => {
+        e.preventDefault();
+        console.log(newMessage);
+    };
     return (
         <div className="messenger">
             <div className="row">
@@ -82,7 +102,12 @@ const Messenger = () => {
                     </div>
                 </div>
                 {currentFriends ? (
-                    <RightSide currentFriends={currentFriends} />
+                    <RightSide
+                        currentFriends={currentFriends}
+                        handleInputValue={handleInputValue}
+                        newMessage={newMessage}
+                        submitInput={submitInput}
+                    />
                 ) : (
                     'Please select your friend'
                 )}

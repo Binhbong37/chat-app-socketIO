@@ -4,7 +4,12 @@ import FriendInfo from './FriendInfo';
 import Message from './Message';
 import MessageSend from './MessageSend';
 
-const RightSide = ({ currentFriends }) => {
+const RightSide = ({
+    currentFriends,
+    handleInputValue,
+    newMessage,
+    submitInput,
+}) => {
     return (
         <div className="col-9">
             <div className="right-side">
@@ -39,7 +44,11 @@ const RightSide = ({ currentFriends }) => {
                                 </div>
                             </div>
                             <Message />
-                            <MessageSend />
+                            <MessageSend
+                                newMessage={newMessage}
+                                handleInputValue={handleInputValue}
+                                submitInput={submitInput}
+                            />
                         </div>
                     </div>
                     <div className="col-4">
