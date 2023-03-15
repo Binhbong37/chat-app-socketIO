@@ -4,8 +4,12 @@ import ActiveFriend from './ActiveFriend';
 import Friends from './Friends';
 import RightSide from './RightSide';
 import { useDispatch, useSelector } from 'react-redux';
-// import { getFriends,messageSend,getMessage,ImageMessageSend,seenMessage,updateMessage,getTheme,themeSet } from '../store/actions/messengerAction';
-import { getFriends, messageSend } from '../store/actions/messengerAction';
+// import { getFriends,messageSend,,ImageMessageSend,seenMessage,updateMessage,getTheme,themeSet } from '../store/actions/messengerAction';
+import {
+    getFriends,
+    messageSend,
+    getMessage,
+} from '../store/actions/messengerAction';
 // import {userLogout } from '../store/actions/authAction';
 
 // import toast,{Toaster} from 'react-hot-toast';
@@ -21,19 +25,27 @@ const Messenger = () => {
     const [newMessage, setNewMessage] = useState('');
 
     const dispatch = useDispatch();
-    const { friends } = useSelector((state) => state.messenger);
+    const { friends, message } = useSelector((state) => state.messenger);
     const { myInfo } = useSelector((state) => state.auth);
 
     useEffect(() => {
+        console.log('UE getFriends');
         dispatch(getFriends());
     }, [dispatch]);
 
     // Get if have Friends
     useEffect(() => {
+        console.log('UE check Friends');
         if (friends && friends.length > 0) {
             setCurrentFriends(friends[0]);
         }
     }, [friends]);
+
+    // getMess
+    useEffect(() => {
+        console.log('UE getMess');
+        dispatch(getMessage(currentFriends._id));
+    }, [dispatch, currentFriends?._id]);
 
     // handle new massage
     const handleInputValue = (e) => {
@@ -116,6 +128,7 @@ const Messenger = () => {
                         handleInputValue={handleInputValue}
                         newMessage={newMessage}
                         submitInput={submitInput}
+                        message={message}
                     />
                 ) : (
                     'Please select your friend'

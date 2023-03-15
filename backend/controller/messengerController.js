@@ -90,45 +90,52 @@ module.exports.messageUploadDB = async (req, res) => {
         });
     }
 };
+
 module.exports.messageGet = async (req, res) => {
     const myId = req.myId;
     const fdId = req.params.id;
 
     try {
-        let getAllMessage = await messageModel.find({
-            $or: [
-                {
-                    $and: [
-                        {
-                            senderId: {
-                                $eq: myId,
-                            },
-                        },
-                        {
-                            reseverId: {
-                                $eq: fdId,
-                            },
-                        },
-                    ],
-                },
-                {
-                    $and: [
-                        {
-                            senderId: {
-                                $eq: fdId,
-                            },
-                        },
-                        {
-                            reseverId: {
-                                $eq: myId,
-                            },
-                        },
-                    ],
-                },
-            ],
-        });
+        // let getAllMessage = await messageModel.find({
+        //     $or: [
+        //         {
+        //             $and: [
+        //                 {
+        //                     senderId: {
+        //                         $eq: myId,
+        //                     },
+        //                 },
+        //                 {
+        //                     reseverId: {
+        //                         $eq: fdId,
+        //                     },
+        //                 },
+        //             ],
+        //         },
+        //         {
+        //             $and: [
+        //                 {
+        //                     senderId: {
+        //                         $eq: fdId,
+        //                     },
+        //                 },
+        //                 {
+        //                     reseverId: {
+        //                         $eq: myId,
+        //                     },
+        //                 },
+        //             ],
+        //         },
+        //     ],
+        // });
 
-        // getAllMessage = getAllMessage.filter(m=>m.senderId === myId && m.reseverId === fdId || m.reseverId ===  myId && m.senderId === fdId );
+        let getAllMessage = await messageModel.find({});
+
+        getAllMessage = getAllMessage.filter(
+            (m) =>
+                (m.senderId === myId && m.reseverId === fdId) ||
+                (m.reseverId === myId && m.senderId === fdId)
+        );
 
         res.status(200).json({
             success: true,
@@ -137,7 +144,7 @@ module.exports.messageGet = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             error: {
-                errorMessage: 'Internal Server error',
+                errorMessage: 'Internal Server error(Get Mess)',
             },
         });
     }

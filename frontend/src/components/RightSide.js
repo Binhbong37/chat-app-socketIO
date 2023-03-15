@@ -9,6 +9,7 @@ const RightSide = ({
     handleInputValue,
     newMessage,
     submitInput,
+    message,
 }) => {
     return (
         <div className="col-9">
@@ -43,7 +44,10 @@ const RightSide = ({
                                     </div>
                                 </div>
                             </div>
-                            <Message />
+                            <Message
+                                message={message}
+                                currentFriends={currentFriends}
+                            />
                             <MessageSend
                                 newMessage={newMessage}
                                 handleInputValue={handleInputValue}
