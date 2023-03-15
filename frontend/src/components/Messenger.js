@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEllipsisH, FaEdit, FaSistrix, FaSignOutAlt } from 'react-icons/fa';
 import ActiveFriend from './ActiveFriend';
 import Friends from './Friends';
@@ -15,6 +15,8 @@ import { getFriends } from '../store/actions/messengerAction';
 // import sendingSound from '../audio/sending.mp3';
 
 const Messenger = () => {
+    const [currentFriends, setCurrentFriends] = useState('');
+    console.log({ currentFriends });
     const dispatch = useDispatch();
     const { friends } = useSelector((state) => state.messenger);
     const { myInfo } = useSelector((state) => state.auth);
@@ -70,6 +72,7 @@ const Messenger = () => {
                                       <div
                                           key={fr._id}
                                           className="hover-friend"
+                                          onClick={() => setCurrentFriends(fr)}
                                       >
                                           <Friends friends={fr} />
                                       </div>
@@ -78,7 +81,11 @@ const Messenger = () => {
                         </div>
                     </div>
                 </div>
-                <RightSide />
+                {currentFriends ? (
+                    <RightSide currentFriends={currentFriends} />
+                ) : (
+                    'Please select your friend'
+                )}
             </div>
         </div>
     );

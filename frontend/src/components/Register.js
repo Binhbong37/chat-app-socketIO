@@ -77,7 +77,7 @@ const Register = () => {
             error.map((err) => alert.error(err));
             dispatch({ type: ERROR_CLEAR });
         }
-    }, [successMessage, error]);
+    }, [successMessage, error, dispatch, navigate, authenticate, alert]);
 
     return (
         <div className="register">
