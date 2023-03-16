@@ -14,13 +14,20 @@ import {
 // import {userLogout } from '../store/actions/authAction';
 
 // import toast,{Toaster} from 'react-hot-toast';
-// import {io} from 'socket.io-client';
+import { io } from 'socket.io-client';
 // import useSound from 'use-sound';
 // import notificationSound from '../audio/notification.mp3';
 // import sendingSound from '../audio/sending.mp3';
 
 const Messenger = () => {
     const scrollRef = useRef();
+    const socket = useRef();
+    console.log({ socket });
+
+    // Socket
+    useEffect(() => {
+        socket.current = io('ws://localhost:8000');
+    }, []);
     const [currentFriends, setCurrentFriends] = useState('');
 
     // take message
