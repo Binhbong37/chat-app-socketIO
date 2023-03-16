@@ -22,12 +22,7 @@ import { io } from 'socket.io-client';
 const Messenger = () => {
     const scrollRef = useRef();
     const socket = useRef();
-    console.log({ socket });
 
-    // Socket
-    useEffect(() => {
-        socket.current = io('ws://localhost:8000');
-    }, []);
     const [currentFriends, setCurrentFriends] = useState('');
 
     // take message
@@ -95,6 +90,26 @@ const Messenger = () => {
         };
         dispatch(messageSend(data));
     };
+
+    // Socket
+    useEffect(() => {
+        socket.current = io('ws://localhost:8000');
+    }, []);
+    // EMIT SOCKET
+    useEffect(() => {
+        console.log('EF SOCKET addUser');
+        socket.current.emit('addUser', myInfo.id, myInfo);
+    }, [myInfo]);
+
+    // Nhận lại data từ socket
+
+    useEffect(() => {
+        console.log('EF SOCKET getUser');
+        socket.current.on('getUser', (user) => {
+            console.log('getSocket', user);
+        });
+    }, []);
+
     return (
         <div className="messenger">
             <div className="row">
