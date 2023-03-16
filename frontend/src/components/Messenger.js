@@ -53,6 +53,10 @@ const Messenger = () => {
         console.log('UE Scroll');
         scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [message]);
+
+    const emoji = (emu) => {
+        setNewMessage(`${newMessage}` + emu);
+    };
     // handle new massage
     const handleInputValue = (e) => {
         setNewMessage(e.target.value);
@@ -136,6 +140,7 @@ const Messenger = () => {
                         submitInput={submitInput}
                         message={message}
                         scrollRef={scrollRef}
+                        emoji={emoji}
                     />
                 ) : (
                     'Please select your friend'
