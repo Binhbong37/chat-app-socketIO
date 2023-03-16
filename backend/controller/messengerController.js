@@ -155,6 +155,7 @@ module.exports.ImageMessageSend = (req, res) => {
     const form = formidable();
 
     form.parse(req, (err, fields, files) => {
+        console.log('controlerMess');
         const { senderName, reseverId, imageName } = fields;
 
         const newPath =
@@ -188,7 +189,7 @@ module.exports.ImageMessageSend = (req, res) => {
         } catch (error) {
             res.status(500).json({
                 error: {
-                    errorMessage: 'Internal Sever Error',
+                    errorMessage: 'Internal Sever Error [ImageInput]',
                 },
             });
         }

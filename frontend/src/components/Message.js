@@ -18,7 +18,14 @@ const Message = ({ message, currentFriends, scrollRef }) => {
                               <div className="image-message">
                                   <div className="my-text">
                                       <p className="message-text">
-                                          {mess.message.text}
+                                          {mess.message.text === '' ? (
+                                              <img
+                                                  src={`/image/${mess.message.image}`}
+                                                  alt="inputImage"
+                                              />
+                                          ) : (
+                                              mess.message.text
+                                          )}
                                       </p>
                                   </div>
                               </div>
@@ -38,7 +45,14 @@ const Message = ({ message, currentFriends, scrollRef }) => {
                                   <div className="message-time">
                                       <div className="fd-text">
                                           <p className="message-text">
-                                              {mess.message.text}
+                                              {mess.message.text === '' ? (
+                                                  <img
+                                                      src={`/image/${mess.message.image}`}
+                                                      alt="inputImage"
+                                                  />
+                                              ) : (
+                                                  mess.message.text
+                                              )}
                                           </p>
                                       </div>
                                       <div className="time">07 March 2023</div>

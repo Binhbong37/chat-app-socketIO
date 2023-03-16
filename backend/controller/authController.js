@@ -13,7 +13,6 @@ module.exports.userRegister = (req, res) => {
     const form = formidable();
 
     form.parse(req, async (err, fields, files) => {
-        console.log('Form Da');
         const { userName, email, password, confirmPassword } = fields;
         const { image } = files;
         const error = [];

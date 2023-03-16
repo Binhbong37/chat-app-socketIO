@@ -12,6 +12,7 @@ const RightSide = ({
     message,
     scrollRef,
     emoji,
+    imageChat,
 }) => {
     return (
         <div className="col-9">
@@ -56,6 +57,7 @@ const RightSide = ({
                                 handleInputValue={handleInputValue}
                                 submitInput={submitInput}
                                 emoji={emoji}
+                                imageChat={imageChat}
                             />
                         </div>
                     </div>

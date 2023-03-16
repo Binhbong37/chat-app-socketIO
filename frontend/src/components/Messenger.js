@@ -4,11 +4,12 @@ import ActiveFriend from './ActiveFriend';
 import Friends from './Friends';
 import RightSide from './RightSide';
 import { useDispatch, useSelector } from 'react-redux';
-// import { getFriends,messageSend,,ImageMessageSend,seenMessage,updateMessage,getTheme,themeSet } from '../store/actions/messengerAction';
+// import { getFriends,messageSend,,,seenMessage,updateMessage,getTheme,themeSet } from '../store/actions/messengerAction';
 import {
     getFriends,
     messageSend,
     getMessage,
+    ImageMessageSend,
 } from '../store/actions/messengerAction';
 // import {userLogout } from '../store/actions/authAction';
 
@@ -54,8 +55,23 @@ const Messenger = () => {
         scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [message]);
 
+    // Add emojo
     const emoji = (emu) => {
         setNewMessage(`${newMessage}` + emu);
+    };
+
+    // Add image
+    const imageChat = (e) => {
+        if (e.target.files.length !== 0) {
+            const imageName = e.target.files[0].name;
+            const newImageName = Date.now() + imageName;
+            const formData = new FormData();
+            formData.append('senderName', myInfo.userName);
+            formData.append('imageName', newImageName);
+            formData.append('reseverId', currentFriends._id);
+            formData.append('image', e.target.files[0]);
+            dispatch(ImageMessageSend(formData));
+        }
     };
     // handle new massage
     const handleInputValue = (e) => {
@@ -141,6 +157,7 @@ const Messenger = () => {
                         message={message}
                         scrollRef={scrollRef}
                         emoji={emoji}
+                        imageChat={imageChat}
                     />
                 ) : (
                     'Please select your friend'
