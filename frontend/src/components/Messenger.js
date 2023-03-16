@@ -27,6 +27,7 @@ const Messenger = () => {
 
     // take message
     const [newMessage, setNewMessage] = useState('');
+    const [acitveUser, setActiveUser] = useState([]);
 
     const dispatch = useDispatch();
     const { friends, message } = useSelector((state) => state.messenger);
@@ -105,8 +106,9 @@ const Messenger = () => {
 
     useEffect(() => {
         console.log('EF SOCKET getUser');
-        socket.current.on('getUser', (user) => {
-            console.log('getSocket', user);
+        socket.current.on('getUser', (users) => {
+            const filterUser = users.filter((u) => u.userId !== myInfo.id);
+            setActiveUser(filterUser);
         });
     }, []);
 
@@ -149,7 +151,14 @@ const Messenger = () => {
                             </div>
                         </div>
                         <div className="active-friends">
-                            <ActiveFriend />
+                            {acitveUser && acitveUser.length > 0
+                                ? acitveUser.map((userActive) => (
+                                      <ActiveFriend
+                                          key={userActive.socketId}
+                                          userActive={userActive}
+                                      />
+                                  ))
+                                : ''}
                         </div>
                         <div className="friends">
                             {friends && friends.length > 0
