@@ -20,6 +20,12 @@ io.on('connection', (socket) => {
         addUser(userId, socket.id, userInfo);
         io.emit('getUser', users);
     });
+
+    socket.on('disconnect', () => {
+        console.log('user is disconnect... ');
+        // userRemove(socket.id);
+        // io.emit('getUser', users);
+    });
 });
 
 // const userRemove = (socketId) => {
