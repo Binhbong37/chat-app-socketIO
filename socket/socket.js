@@ -14,6 +14,14 @@ const addUser = (userId, socketId, userInfo) => {
     }
 };
 
+const userRemove = (socketId) => {
+    users = users.filter((u) => u.socketId !== socketId);
+};
+
+const findFriend = (id) => {
+    return users.find((u) => u.userId === id);
+};
+
 io.on('connection', (socket) => {
     console.log('Socket is connecting ...');
     socket.on('addUser', (userId, userInfo) => {
@@ -21,19 +29,23 @@ io.on('connection', (socket) => {
         io.emit('getUser', users);
     });
 
+    socket.on('sendMessage', (data) => {
+        const user = findFriend(data.reseverId);
+
+        if (user !== undefined) {
+            socket.to(user.socketId).emit('getMessage', data);
+        }
+    });
+
     socket.on('disconnect', () => {
         console.log('user is disconnect... ');
-        // userRemove(socket.id);
-        // io.emit('getUser', users);
+        userRemove(socket.id);
+        io.emit('getUser', users);
     });
 });
 
 // const userRemove = (socketId) => {
 //     users = users.filter((u) => u.socketId !== socketId);
-// };
-
-// const findFriend = (id) => {
-//     return users.find((u) => u.userId === id);
 // };
 
 // const userLogout = (userId) => {
@@ -50,13 +62,6 @@ io.on('connection', (socket) => {
 //         const con = 'new_user_add';
 //         for (var i = 0; i < us.length; i++) {
 //             socket.to(us[i].socketId).emit('new_user_add', con);
-//         }
-//     });
-//     socket.on('sendMessage', (data) => {
-//         const user = findFriend(data.reseverId);
-
-//         if (user !== undefined) {
-//             socket.to(user.socketId).emit('getMessage', data);
 //         }
 //     });
 

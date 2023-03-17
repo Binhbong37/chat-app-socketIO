@@ -4,6 +4,7 @@ import ActiveFriend from './ActiveFriend';
 import Friends from './Friends';
 import RightSide from './RightSide';
 import { useDispatch, useSelector } from 'react-redux';
+import { SOCKET_MESSAGE } from '../store/types/messengerType';
 // import { getFriends,messageSend,,,seenMessage,updateMessage,getTheme,themeSet } from '../store/actions/messengerAction';
 import {
     getFriends,
@@ -28,6 +29,9 @@ const Messenger = () => {
     // take message
     const [newMessage, setNewMessage] = useState('');
     const [acitveUser, setActiveUser] = useState([]);
+
+    // socket Mess
+    const [socketMessage, setSocketMessage] = useState('');
 
     const dispatch = useDispatch();
     const { friends, message } = useSelector((state) => state.messenger);
@@ -89,13 +93,47 @@ const Messenger = () => {
             reseverId: currentFriends._id,
             message: newMessage ? newMessage : '❤️',
         };
+
+        socket.current.emit('sendMessage', {
+            senderId: myInfo.id,
+            senderName: myInfo.userName,
+            reseverId: currentFriends._id,
+            time: new Date(),
+            message: {
+                text: newMessage ? newMessage : '❤️',
+                image: '',
+            },
+        });
         dispatch(messageSend(data));
+        setNewMessage('');
     };
 
     // Socket
     useEffect(() => {
         socket.current = io('ws://localhost:8000');
+        socket.current.on('getMessage', (data) => {
+            setSocketMessage(data);
+        });
     }, []);
+
+    // senMess Socket
+    useEffect(() => {
+        console.log('EF SOCKET SendMess');
+        if (socketMessage && currentFriends) {
+            if (
+                socketMessage.senderId === currentFriends._id &&
+                socketMessage.reseverId === myInfo.id
+            ) {
+                dispatch({
+                    type: SOCKET_MESSAGE,
+                    payload: {
+                        message: socketMessage,
+                    },
+                });
+            }
+        }
+        setSocketMessage('');
+    }, [socketMessage]);
     // EMIT SOCKET
     useEffect(() => {
         console.log('EF SOCKET addUser');
