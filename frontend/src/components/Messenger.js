@@ -32,6 +32,8 @@ const Messenger = () => {
 
     // socket Mess
     const [socketMessage, setSocketMessage] = useState('');
+    // typing Mess
+    const [typingMessage, setTypingMessage] = useState('');
 
     const dispatch = useDispatch();
     const { friends, message } = useSelector((state) => state.messenger);
@@ -65,6 +67,12 @@ const Messenger = () => {
     // Add emojo
     const emoji = (emu) => {
         setNewMessage(`${newMessage}` + emu);
+
+        socket.current.emit('typingMessage', {
+            senderId: myInfo.id,
+            reseverId: currentFriends._id,
+            msg: emu,
+        });
     };
 
     // Add image
@@ -72,6 +80,16 @@ const Messenger = () => {
         if (e.target.files.length !== 0) {
             const imageName = e.target.files[0].name;
             const newImageName = Date.now() + imageName;
+            socket.current.emit('sendMessage', {
+                senderId: myInfo.id,
+                senderName: myInfo.userName,
+                reseverId: currentFriends._id,
+                time: new Date(),
+                message: {
+                    text: '',
+                    image: newImageName,
+                },
+            });
             const formData = new FormData();
             formData.append('senderName', myInfo.userName);
             formData.append('imageName', newImageName);
@@ -83,6 +101,11 @@ const Messenger = () => {
     // handle new massage
     const handleInputValue = (e) => {
         setNewMessage(e.target.value);
+        socket.current.emit('typingMessage', {
+            senderId: myInfo.id,
+            reseverId: currentFriends._id,
+            msg: e.target.value,
+        });
     };
 
     // take submit
@@ -104,6 +127,12 @@ const Messenger = () => {
                 image: '',
             },
         });
+
+        socket.current.emit('typingMessage', {
+            senderId: myInfo.id,
+            reseverId: currentFriends._id,
+            msg: '',
+        });
         dispatch(messageSend(data));
         setNewMessage('');
     };
@@ -113,6 +142,10 @@ const Messenger = () => {
         socket.current = io('ws://localhost:8000');
         socket.current.on('getMessage', (data) => {
             setSocketMessage(data);
+        });
+
+        socket.current.on('typingMessageGet', (data) => {
+            setTypingMessage(data);
         });
     }, []);
 
@@ -229,6 +262,7 @@ const Messenger = () => {
                         emoji={emoji}
                         imageChat={imageChat}
                         acitveUser={acitveUser}
+                        typingMessage={typingMessage}
                     />
                 ) : (
                     'Please select your friend'

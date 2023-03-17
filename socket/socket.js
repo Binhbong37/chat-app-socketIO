@@ -37,6 +37,17 @@ io.on('connection', (socket) => {
         }
     });
 
+    socket.on('typingMessage', (data) => {
+        const user = findFriend(data.reseverId);
+        if (user !== undefined) {
+            socket.to(user.socketId).emit('typingMessageGet', {
+                senderId: data.senderId,
+                reseverId: data.reseverId,
+                msg: data.msg,
+            });
+        }
+    });
+
     socket.on('disconnect', () => {
         console.log('user is disconnect... ');
         userRemove(socket.id);
@@ -82,17 +93,6 @@ io.on('connection', (socket) => {
 //         const user = findFriend(data.senderId);
 //         if (user !== undefined) {
 //             socket.to(user.socketId).emit('seenSuccess', data);
-//         }
-//     });
-
-//     socket.on('typingMessage', (data) => {
-//         const user = findFriend(data.reseverId);
-//         if (user !== undefined) {
-//             socket.to(user.socketId).emit('typingMessageGet', {
-//                 senderId: data.senderId,
-//                 reseverId: data.reseverId,
-//                 msg: data.msg,
-//             });
 //         }
 //     });
 
