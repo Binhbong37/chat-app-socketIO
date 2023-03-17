@@ -156,6 +156,7 @@ const Messenger = () => {
                                       <ActiveFriend
                                           key={userActive.socketId}
                                           userActive={userActive}
+                                          setCurrentFriends={setCurrentFriends}
                                       />
                                   ))
                                 : ''}
@@ -189,6 +190,7 @@ const Messenger = () => {
                         scrollRef={scrollRef}
                         emoji={emoji}
                         imageChat={imageChat}
+                        acitveUser={acitveUser}
                     />
                 ) : (
                     'Please select your friend'

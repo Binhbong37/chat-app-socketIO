@@ -13,6 +13,7 @@ const RightSide = ({
     scrollRef,
     emoji,
     imageChat,
+    acitveUser,
 }) => {
     return (
         <div className="col-9">
@@ -28,6 +29,16 @@ const RightSide = ({
                                             src={`/image/${currentFriends.image}`}
                                             alt={currentFriends.userName}
                                         />
+                                        {acitveUser &&
+                                        acitveUser.length > 0 &&
+                                        acitveUser.some(
+                                            (u) =>
+                                                u.userId === currentFriends._id
+                                        ) ? (
+                                            <div className="active-icon"></div>
+                                        ) : (
+                                            ''
+                                        )}
                                     </div>
                                     <div className="name">
                                         <h3>{currentFriends.userName}</h3>
@@ -62,7 +73,10 @@ const RightSide = ({
                         </div>
                     </div>
                     <div className="col-4">
-                        <FriendInfo friendInfo={currentFriends} />
+                        <FriendInfo
+                            friendInfo={currentFriends}
+                            acitveUser={acitveUser}
+                        />
                     </div>
                 </div>
             </div>
