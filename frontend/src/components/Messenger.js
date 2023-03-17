@@ -14,11 +14,11 @@ import {
 } from '../store/actions/messengerAction';
 // import {userLogout } from '../store/actions/authAction';
 
-// import toast,{Toaster} from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { io } from 'socket.io-client';
-// import useSound from 'use-sound';
-// import notificationSound from '../audio/notification.mp3';
-// import sendingSound from '../audio/sending.mp3';
+import useSound from 'use-sound';
+import notificationSound from '../audio/notification.mp3';
+import sendingSound from '../audio/sending.mp3';
 
 const Messenger = () => {
     const scrollRef = useRef();
@@ -38,7 +38,9 @@ const Messenger = () => {
     const dispatch = useDispatch();
     const { friends, message } = useSelector((state) => state.messenger);
     const { myInfo } = useSelector((state) => state.auth);
-
+    // sound
+    const [notificationPlay] = useSound(notificationSound);
+    const [sendingPlay] = useSound(sendingSound);
     useEffect(() => {
         console.log('UE getFriends');
         dispatch(getFriends());
@@ -78,6 +80,7 @@ const Messenger = () => {
     // Add image
     const imageChat = (e) => {
         if (e.target.files.length !== 0) {
+            sendingPlay();
             const imageName = e.target.files[0].name;
             const newImageName = Date.now() + imageName;
             socket.current.emit('sendMessage', {
@@ -111,6 +114,7 @@ const Messenger = () => {
     // take submit
     const submitInput = (e) => {
         e.preventDefault();
+        sendingPlay();
         const data = {
             senderName: myInfo.userName,
             reseverId: currentFriends._id,
@@ -183,8 +187,31 @@ const Messenger = () => {
         });
     }, []);
 
+    // TOAST
+    useEffect(() => {
+        console.log('TOST');
+        if (
+            socketMessage &&
+            socketMessage.senderId !== currentFriends._id &&
+            socketMessage.reseverId === myInfo.id
+        ) {
+            console.log('Tost inside');
+            notificationPlay();
+            toast.success(`${socketMessage.senderName} send a new message`);
+        }
+    }, [socketMessage]);
+
     return (
         <div className="messenger">
+            <Toaster
+                position={'top-right'}
+                reverseOrder={false}
+                toastOptions={{
+                    style: {
+                        fontSize: '18px',
+                    },
+                }}
+            />
             <div className="row">
                 <div className="col-3">
                     <div className="left-side">
