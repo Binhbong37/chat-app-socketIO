@@ -9,12 +9,14 @@ import {
     SOCKET_MESSAGE,
     UPDATE_FRIEND_MESSAGE,
 } from '../store/types/messengerType';
-// import { getFriends,messageSend,,,seenMessage,updateMessage,getTheme,themeSet } from '../store/actions/messengerAction';
+// import { ,,,,,,getTheme,themeSet } from '../store/actions/messengerAction';
 import {
     getFriends,
     messageSend,
     getMessage,
     ImageMessageSend,
+    seenMessage,
+    updateMessage,
 } from '../store/actions/messengerAction';
 // import {userLogout } from '../store/actions/authAction';
 
@@ -163,6 +165,8 @@ const Messenger = () => {
                     },
                 });
 
+                dispatch(seenMessage(socketMessage));
+
                 dispatch({
                     type: UPDATE_FRIEND_MESSAGE,
                     payload: {
@@ -214,9 +218,15 @@ const Messenger = () => {
             socketMessage.senderId !== currentFriends._id &&
             socketMessage.reseverId === myInfo.id
         ) {
-            console.log('Tost inside');
             notificationPlay();
             toast.success(`${socketMessage.senderName} send a new message`);
+            dispatch(updateMessage(socketMessage));
+            dispatch({
+                type: UPDATE_FRIEND_MESSAGE,
+                payload: {
+                    msgInfo: socketMessage,
+                },
+            });
         }
     }, [socketMessage]);
 

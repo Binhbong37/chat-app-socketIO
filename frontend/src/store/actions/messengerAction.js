@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import {FRIEND_GET_SUCCESS,,MESSAGE_SEND_SUCCESS,THEME_GET_SUCCESS,THEME_SET_SUCCESS} from "../types/messengerType";
+// import {,,,THEME_GET_SUCCESS,THEME_SET_SUCCESS} from "../types/messengerType";
 import {
     FRIEND_GET_SUCCESS,
     MESSAGE_SEND_SUCCESS,
@@ -67,25 +67,23 @@ export const ImageMessageSend = (data) => async (dispatch) => {
     }
 };
 
-// export const seenMessage = (msg) => async(dispatch)=> {
-//      try{
-//           const response = await axios.post('/api/messenger/seen-message',msg);
-//           console.log(response.data);
-//      }catch (error){
-//           console.log(error.response.message)
+export const seenMessage = (msg) => async (dispatch) => {
+    try {
+        const response = await axios.post('/api/seen-message', msg);
+        console.log(response.data);
+    } catch (error) {
+        console.log(error.response.message);
+    }
+};
 
-//      }
-// }
-
-// export const updateMessage = (msg) => async(dispatch)=> {
-//      try{
-//           const response = await axios.post('/api/messenger/delivared-message',msg);
-//           console.log(response.data);
-//      }catch (error){
-//           console.log(error.response.message)
-
-//      }
-// }
+export const updateMessage = (msg) => async (dispatch) => {
+    try {
+        const response = await axios.post('/api/delivared-message', msg);
+        console.log(response.data);
+    } catch (error) {
+        console.log(error.response.message);
+    }
+};
 
 // export const getTheme = () => async(dispatch) => {
 

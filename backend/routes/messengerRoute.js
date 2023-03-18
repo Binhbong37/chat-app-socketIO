@@ -5,8 +5,8 @@ const {
     messageUploadDB,
     messageGet,
     ImageMessageSend,
-    // messageSeen,
-    // delivaredMessage,
+    messageSeen,
+    delivaredMessage,
 } = require('../controller/messengerController');
 const { authMiddleware } = require('../middleware/authMiddleware');
 
@@ -15,7 +15,7 @@ router.post('/send-message', authMiddleware, messageUploadDB);
 router.get('/get-message/:id', authMiddleware, messageGet);
 router.post('/image-message-send', authMiddleware, ImageMessageSend);
 
-// router.post('/seen-message', authMiddleware, messageSeen);
-// router.post('/delivared-message', authMiddleware, delivaredMessage);
+router.post('/seen-message', authMiddleware, messageSeen);
+router.post('/delivared-message', authMiddleware, delivaredMessage);
 
 module.exports = router;

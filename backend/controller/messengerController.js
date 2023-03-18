@@ -227,7 +227,7 @@ module.exports.messageSeen = async (req, res) => {
         .catch(() => {
             res.status(500).json({
                 error: {
-                    errorMessage: 'Internal Server Error',
+                    errorMessage: 'Internal Server Error[sennMess]',
                 },
             });
         });
@@ -248,7 +248,7 @@ module.exports.delivaredMessage = async (req, res) => {
         .catch(() => {
             res.status(500).json({
                 error: {
-                    errorMessage: 'Internal Server Error',
+                    errorMessage: 'Internal Server Error[Deliver]',
                 },
             });
         });
