@@ -4,7 +4,11 @@ import ActiveFriend from './ActiveFriend';
 import Friends from './Friends';
 import RightSide from './RightSide';
 import { useDispatch, useSelector } from 'react-redux';
-import { SOCKET_MESSAGE } from '../store/types/messengerType';
+import {
+    MESSAGE_SEND_SUCCESS_CLEAR,
+    SOCKET_MESSAGE,
+    UPDATE_FRIEND_MESSAGE,
+} from '../store/types/messengerType';
 // import { getFriends,messageSend,,,seenMessage,updateMessage,getTheme,themeSet } from '../store/actions/messengerAction';
 import {
     getFriends,
@@ -36,7 +40,9 @@ const Messenger = () => {
     const [typingMessage, setTypingMessage] = useState('');
 
     const dispatch = useDispatch();
-    const { friends, message } = useSelector((state) => state.messenger);
+    const { friends, message, mesageSendSuccess } = useSelector(
+        (state) => state.messenger
+    );
     const { myInfo } = useSelector((state) => state.auth);
     // sound
     const [notificationPlay] = useSound(notificationSound);
@@ -121,17 +127,6 @@ const Messenger = () => {
             message: newMessage ? newMessage : '❤️',
         };
 
-        socket.current.emit('sendMessage', {
-            senderId: myInfo.id,
-            senderName: myInfo.userName,
-            reseverId: currentFriends._id,
-            time: new Date(),
-            message: {
-                text: newMessage ? newMessage : '❤️',
-                image: '',
-            },
-        });
-
         socket.current.emit('typingMessage', {
             senderId: myInfo.id,
             reseverId: currentFriends._id,
@@ -167,6 +162,13 @@ const Messenger = () => {
                         message: socketMessage,
                     },
                 });
+
+                dispatch({
+                    type: UPDATE_FRIEND_MESSAGE,
+                    payload: {
+                        msgInfo: socketMessage,
+                    },
+                });
             }
         }
         setSocketMessage('');
@@ -186,6 +188,23 @@ const Messenger = () => {
             setActiveUser(filterUser);
         });
     }, []);
+
+    // mesageSendSuccess
+    useEffect(() => {
+        if (mesageSendSuccess) {
+            socket.current.emit('sendMessage', message[message.length - 1]);
+            dispatch({
+                type: UPDATE_FRIEND_MESSAGE,
+                payload: {
+                    msgInfo: message[message.length - 1],
+                },
+            });
+
+            dispatch({
+                type: MESSAGE_SEND_SUCCESS_CLEAR,
+            });
+        }
+    }, [mesageSendSuccess]);
 
     // TOAST
     useEffect(() => {

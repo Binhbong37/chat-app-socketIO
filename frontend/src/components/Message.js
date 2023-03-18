@@ -12,7 +12,7 @@ const Message = ({ message, currentFriends, scrollRef, typingMessage }) => {
                     ? message.map((mess) =>
                           mess.senderId === myInfo.id ? (
                               <div
-                                  key={mess._id}
+                                  key={mess._id || mess.time}
                                   className="my-message"
                                   ref={scrollRef}
                               >
@@ -34,7 +34,7 @@ const Message = ({ message, currentFriends, scrollRef, typingMessage }) => {
                               </div>
                           ) : (
                               <div
-                                  key={mess._id}
+                                  key={mess._id || mess.time}
                                   className="fd-message"
                                   ref={scrollRef}
                               >
