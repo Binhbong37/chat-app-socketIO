@@ -9,6 +9,7 @@ import {
 export const getFriends = () => async (dispatch) => {
     try {
         const response = await axios.get('/api/get-friends');
+
         dispatch({
             type: FRIEND_GET_SUCCESS,
             payload: {

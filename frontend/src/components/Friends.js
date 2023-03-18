@@ -21,14 +21,15 @@ const Friends = ({ friends, myId }) => {
                 <div className="friend-name">
                     <h4>{fndInfo.userName}</h4>
                     <div className="msg-time">
-                        {msgInfo && msgInfo.senderId === myId.id ? (
+                        {msgInfo && msgInfo.senderId === myId ? (
                             <span>You </span>
                         ) : (
                             <span>{fndInfo.userName + ' '}</span>
                         )}
+
                         {msgInfo && msgInfo.message.text ? (
                             <span>{msgInfo.message.text.slice(0, 10)} </span>
-                        ) : msgInfo.message.image ? (
+                        ) : msgInfo && msgInfo.message.image ? (
                             <span>Sent a image </span>
                         ) : (
                             <span>Connect you</span>
@@ -44,7 +45,7 @@ const Friends = ({ friends, myId }) => {
                         </span>
                     </div>
                 </div>
-                {myId.id === msgInfo?.senderId ? (
+                {myId === msgInfo?.senderId ? (
                     <div className="seen-unseen-icon">
                         {msgInfo.status === 'seen' ? (
                             <img src={`/image/${fndInfo.image}`} alt="seen" />
@@ -58,7 +59,12 @@ const Friends = ({ friends, myId }) => {
                     </div>
                 ) : (
                     <div className="seen-unseen-icon">
-                        <div className="seen-icon"></div>
+                        {msgInfo?.status !== undefined &&
+                        msgInfo?.status !== 'seen' ? (
+                            <div className="seen-icon"></div>
+                        ) : (
+                            ''
+                        )}
                     </div>
                 )}
             </div>

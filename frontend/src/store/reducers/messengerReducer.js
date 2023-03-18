@@ -1,4 +1,4 @@
-// import {,,,,,,SEEN_MESSAGE,DELIVARED_MESSAGE,UPDATE,MESSAGE_GET_SUCCESS_CLEAR,SEEN_ALL} from "../types/messengerType";
+// import {,,,,,,,,UPDATE,MESSAGE_GET_SUCCESS_CLEAR,SEEN_ALL} from "../types/messengerType";
 import {
     FRIEND_GET_SUCCESS,
     MESSAGE_SEND_SUCCESS,
@@ -6,6 +6,8 @@ import {
     SOCKET_MESSAGE,
     UPDATE_FRIEND_MESSAGE,
     MESSAGE_SEND_SUCCESS_CLEAR,
+    SEEN_MESSAGE,
+    DELIVARED_MESSAGE,
 } from '../types/messengerType';
 
 const messengerState = {
@@ -60,6 +62,28 @@ export const messengerReducer = (state = messengerState, action) => {
                 mesageSendSuccess: false,
             };
 
+        case SEEN_MESSAGE:
+            const indexSeen = state.friends.findIndex(
+                (f) =>
+                    f.fndInfo._id === payload.msgInfo.reseverId ||
+                    f.fndInfo._id === payload.msgInfo.senderId
+            );
+            state.friends[indexSeen].msgInfo.status = 'seen';
+            return {
+                ...state,
+            };
+
+        case DELIVARED_MESSAGE:
+            const indexDeli = state.friends.findIndex(
+                (f) =>
+                    f.fndInfo._id === payload.msgInfo.reseverId ||
+                    f.fndInfo._id === payload.msgInfo.senderId
+            );
+            state.friends[indexDeli].msgInfo.status = 'delivared';
+            return {
+                ...state,
+            };
+
         default:
             return state;
     }
@@ -69,22 +93,6 @@ export const messengerReducer = (state = messengerState, action) => {
     //                ...state,
     //                themeMood : payload.theme
     //           }
-    //      }
-
-    //      if(type === SEEN_MESSAGE){
-    //           const index = state.friends.findIndex(f=>f.fndInfo._id === payload.msgInfo.reseverId || f.fndInfo._id === payload.msgInfo.senderId);
-    //           state.friends[index].msgInfo.status = 'seen';
-    //          return {
-    //               ...state
-    //          };
-    //      }
-
-    //      if(type === DELIVARED_MESSAGE){
-    //           const index = state.friends.findIndex(f=>f.fndInfo._id === payload.msgInfo.reseverId || f.fndInfo._id === payload.msgInfo.senderId);
-    //           state.friends[index].msgInfo.status = 'delivared';
-    //          return {
-    //               ...state
-    //          };
     //      }
 
     //      if(type === UPDATE){

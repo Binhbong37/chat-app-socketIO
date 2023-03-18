@@ -8,6 +8,8 @@ import {
     MESSAGE_SEND_SUCCESS_CLEAR,
     SOCKET_MESSAGE,
     UPDATE_FRIEND_MESSAGE,
+    SEEN_MESSAGE,
+    DELIVARED_MESSAGE,
 } from '../store/types/messengerType';
 // import { ,,,,,,getTheme,themeSet } from '../store/actions/messengerAction';
 import {
@@ -45,6 +47,7 @@ const Messenger = () => {
     const { friends, message, mesageSendSuccess } = useSelector(
         (state) => state.messenger
     );
+
     const { myInfo } = useSelector((state) => state.auth);
     // sound
     const [notificationPlay] = useSound(notificationSound);
@@ -58,7 +61,7 @@ const Messenger = () => {
     useEffect(() => {
         console.log('UE check Friends');
         if (friends && friends.length > 0) {
-            setCurrentFriends(friends[0]);
+            setCurrentFriends(friends[0].fndInfo);
         }
     }, [friends]);
 
@@ -148,7 +151,25 @@ const Messenger = () => {
         socket.current.on('typingMessageGet', (data) => {
             setTypingMessage(data);
         });
-    }, []);
+
+        socket.current.on('msgSeenResponse', (msg) => {
+            dispatch({
+                type: SEEN_MESSAGE,
+                payload: {
+                    msgInfo: msg,
+                },
+            });
+        });
+
+        socket.current.on('msgDelivaredResponse', (msg) => {
+            dispatch({
+                type: DELIVARED_MESSAGE,
+                payload: {
+                    msgInfo: msg,
+                },
+            });
+        });
+    }, [dispatch]);
 
     // senMess Socket
     useEffect(() => {
@@ -167,10 +188,13 @@ const Messenger = () => {
 
                 dispatch(seenMessage(socketMessage));
 
+                socket.current.emit('messageSeen', socketMessage);
+
                 dispatch({
                     type: UPDATE_FRIEND_MESSAGE,
                     payload: {
                         msgInfo: socketMessage,
+                        status: 'seen',
                     },
                 });
             }
@@ -221,10 +245,12 @@ const Messenger = () => {
             notificationPlay();
             toast.success(`${socketMessage.senderName} send a new message`);
             dispatch(updateMessage(socketMessage));
+            socket.current.emit('delivaredMessage', socketMessage);
             dispatch({
                 type: UPDATE_FRIEND_MESSAGE,
                 payload: {
                     msgInfo: socketMessage,
+                    status: 'delivared',
                 },
             });
         }
@@ -303,7 +329,10 @@ const Messenger = () => {
                                               setCurrentFriends(fr.fndInfo)
                                           }
                                       >
-                                          <Friends friends={fr} myId={myInfo} />
+                                          <Friends
+                                              friends={fr}
+                                              myId={myInfo.id}
+                                          />
                                       </div>
                                   ))
                                 : 'No Friend'}

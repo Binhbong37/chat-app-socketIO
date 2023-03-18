@@ -4,6 +4,7 @@ const formidable = require('formidable');
 const fs = require('fs');
 
 const getLastMessage = async (myId, fdId) => {
+    fdId = fdId.toString();
     const msg = await messageModel
         .findOne({
             $or: [
@@ -55,7 +56,9 @@ module.exports.getFriends = async (req, res) => {
         });
 
         for (let i = 0; i < friendGet.length; i++) {
-            let lmsg = await getLastMessage(myId, friendGet[i].id);
+            let lmsg = await getLastMessage(myId, friendGet[i]._id);
+
+            // console.log(lmsg);
             fnd_msg = [
                 ...fnd_msg,
                 {
@@ -67,6 +70,7 @@ module.exports.getFriends = async (req, res) => {
         // const filterMy = friendGet.filter(
         //     (fr) => fr._id.toString() !== myId.toString()
         // );
+
         res.status(200).json({
             success: true,
             friends: fnd_msg,
