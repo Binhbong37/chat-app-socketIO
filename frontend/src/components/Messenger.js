@@ -10,6 +10,9 @@ import {
     UPDATE_FRIEND_MESSAGE,
     SEEN_MESSAGE,
     DELIVARED_MESSAGE,
+    UPDATE,
+    MESSAGE_GET_SUCCESS_CLEAR,
+    SEEN_ALL,
 } from '../store/types/messengerType';
 // import { ,,,,,,getTheme,themeSet } from '../store/actions/messengerAction';
 import {
@@ -44,9 +47,8 @@ const Messenger = () => {
     const [typingMessage, setTypingMessage] = useState('');
 
     const dispatch = useDispatch();
-    const { friends, message, mesageSendSuccess } = useSelector(
-        (state) => state.messenger
-    );
+    const { friends, message, mesageSendSuccess, message_get_success } =
+        useSelector((state) => state.messenger);
 
     const { myInfo } = useSelector((state) => state.auth);
     // sound
@@ -76,6 +78,36 @@ const Messenger = () => {
         console.log('UE Scroll');
         scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [message]);
+
+    // message_get_success
+    useEffect(() => {
+        console.log('UE Mess_get_sucess');
+        if (message.length > 0) {
+            if (
+                message[message.length - 1].senderId !== myInfo.id &&
+                message[message.length - 1].status === 'seen'
+            ) {
+                dispatch({
+                    type: UPDATE,
+                    payload: {
+                        id: currentFriends._id,
+                    },
+                });
+                socket.current.emit('seen', {
+                    senderId: currentFriends._id,
+                    reseverId: myInfo.id,
+                });
+                dispatch(
+                    seenMessage({
+                        _id: message[message.length - 1]._id,
+                    })
+                );
+            }
+        }
+        dispatch({
+            type: MESSAGE_GET_SUCCESS_CLEAR,
+        });
+    }, [message_get_success, currentFriends?._id]);
 
     // Add emojo
     const emoji = (emu) => {
@@ -167,6 +199,13 @@ const Messenger = () => {
                 payload: {
                     msgInfo: msg,
                 },
+            });
+        });
+
+        socket.current.on('seenSuccess', (data) => {
+            dispatch({
+                type: SEEN_ALL,
+                payload: data,
             });
         });
     }, [dispatch]);

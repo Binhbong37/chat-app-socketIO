@@ -51,6 +51,13 @@ io.on('connection', (socket) => {
         }
     });
 
+    socket.on('seen', (data) => {
+        const user = findFriend(data.senderId);
+        if (user !== undefined) {
+            socket.to(user.socketId).emit('seenSuccess', data);
+        }
+    });
+
     socket.on('typingMessage', (data) => {
         const user = findFriend(data.reseverId);
         if (user !== undefined) {
@@ -69,10 +76,6 @@ io.on('connection', (socket) => {
     });
 });
 
-// const userRemove = (socketId) => {
-//     users = users.filter((u) => u.socketId !== socketId);
-// };
-
 // const userLogout = (userId) => {
 //     users = users.filter((u) => u.userId !== userId);
 // };
@@ -87,13 +90,6 @@ io.on('connection', (socket) => {
 //         const con = 'new_user_add';
 //         for (var i = 0; i < us.length; i++) {
 //             socket.to(us[i].socketId).emit('new_user_add', con);
-//         }
-//     });
-
-//     socket.on('seen', (data) => {
-//         const user = findFriend(data.senderId);
-//         if (user !== undefined) {
-//             socket.to(user.socketId).emit('seenSuccess', data);
 //         }
 //     });
 
