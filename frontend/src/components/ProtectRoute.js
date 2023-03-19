@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 const ProtectRoute = ({ children }) => {
     const { authenticate } = useSelector((state) => state.auth);
-    return authenticate ? children : <Navigate to="/login" />;
+    return authenticate ? children : <Navigate to="/home" />;
 };
 
 export default ProtectRoute;
