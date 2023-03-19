@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import { FaRegCheckCircle } from 'react-icons/fa';
 
-const Friends = ({ friends, myId }) => {
+const Friends = ({ friends, myId, acitveUser }) => {
     const { fndInfo, msgInfo } = friends;
 
     return (
@@ -14,21 +14,58 @@ const Friends = ({ friends, myId }) => {
                         src={`image/${fndInfo.image}`}
                         alt={fndInfo.userName}
                     />
+                    {acitveUser &&
+                    acitveUser.length > 0 &&
+                    acitveUser.some((u) => u.userId === fndInfo._id) ? (
+                        <div className="active_icon"></div>
+                    ) : (
+                        ''
+                    )}
                 </div>
             </div>
 
             <div className="friend-name-seen">
                 <div className="friend-name">
-                    <h4>{fndInfo.userName}</h4>
+                    <h4
+                        className={
+                            msgInfo?.senderId !== myId &&
+                            msgInfo?.status === undefined &&
+                            msgInfo?.status !== 'seen'
+                                ? 'unseen_message'
+                                : ''
+                        }
+                    >
+                        {fndInfo.userName}
+                    </h4>
                     <div className="msg-time">
                         {msgInfo && msgInfo.senderId === myId ? (
                             <span>You </span>
                         ) : (
-                            <span>{fndInfo.userName + ' '}</span>
+                            <span
+                                className={
+                                    msgInfo?.senderId !== myId &&
+                                    msgInfo?.status === undefined &&
+                                    msgInfo?.status !== 'seen'
+                                        ? 'unseen_message'
+                                        : ''
+                                }
+                            >
+                                {fndInfo.userName + ' '}
+                            </span>
                         )}
 
                         {msgInfo && msgInfo.message.text ? (
-                            <span>{msgInfo.message.text.slice(0, 10)} </span>
+                            <span
+                                className={
+                                    msgInfo?.senderId !== myId &&
+                                    msgInfo?.status === undefined &&
+                                    msgInfo?.status !== 'seen'
+                                        ? 'unseen_message'
+                                        : ''
+                                }
+                            >
+                                {msgInfo.message.text.slice(0, 10)}{' '}
+                            </span>
                         ) : msgInfo && msgInfo.message.image ? (
                             <span>Sent a image </span>
                         ) : (
