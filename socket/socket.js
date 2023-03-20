@@ -22,6 +22,10 @@ const findFriend = (id) => {
     return users.find((u) => u.userId === id);
 };
 
+const userLogout = (userId) => {
+    users = users.filter((u) => u.userId !== userId);
+};
+
 io.on('connection', (socket) => {
     console.log('Socket is connecting ...');
     socket.on('addUser', (userId, userInfo) => {
@@ -69,37 +73,13 @@ io.on('connection', (socket) => {
         }
     });
 
+    socket.on('logout', (userId) => {
+        userLogout(userId);
+    });
+
     socket.on('disconnect', () => {
         console.log('user is disconnect... ');
         userRemove(socket.id);
         io.emit('getUser', users);
     });
 });
-
-// const userLogout = (userId) => {
-//     users = users.filter((u) => u.userId !== userId);
-// };
-
-// io.on('connection', (socket) => {
-//     console.log('Socket is connecting...');
-//     socket.on('addUser', (userId, userInfo) => {
-//         addUser(userId, socket.id, userInfo);
-//         io.emit('getUser', users);
-
-//         const us = users.filter((u) => u.userId !== userId);
-//         const con = 'new_user_add';
-//         for (var i = 0; i < us.length; i++) {
-//             socket.to(us[i].socketId).emit('new_user_add', con);
-//         }
-//     });
-
-//     socket.on('logout', (userId) => {
-//         userLogout(userId);
-//     });
-
-//     socket.on('disconnect', () => {
-//         console.log('user is disconnect... ');
-//         userRemove(socket.id);
-//         io.emit('getUser', users);
-//     });
-// });

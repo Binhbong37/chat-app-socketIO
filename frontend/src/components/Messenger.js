@@ -23,7 +23,7 @@ import {
     seenMessage,
     updateMessage,
 } from '../store/actions/messengerAction';
-// import {userLogout } from '../store/actions/authAction';
+import { userLogout } from '../store/actions/authAction';
 
 import toast, { Toaster } from 'react-hot-toast';
 import { io } from 'socket.io-client';
@@ -45,6 +45,8 @@ const Messenger = () => {
     const [socketMessage, setSocketMessage] = useState('');
     // typing Mess
     const [typingMessage, setTypingMessage] = useState('');
+    // Show/hide Logout
+    const [hide, setHide] = useState(true);
 
     const dispatch = useDispatch();
     const { friends, message, mesageSendSuccess, message_get_success } =
@@ -295,6 +297,12 @@ const Messenger = () => {
         }
     }, [socketMessage]);
 
+    // LOGOUT
+    const logout = () => {
+        dispatch(userLogout());
+        socket.current.emit('logout', myInfo.id);
+    };
+
     return (
         <div className="messenger">
             <Toaster
@@ -322,11 +330,46 @@ const Messenger = () => {
                                 </div>
                             </div>
                             <div className="icons">
-                                <div className="icon">
+                                <div
+                                    className="icon"
+                                    onClick={() => setHide((prev) => !prev)}
+                                >
                                     <FaEllipsisH />
                                 </div>
                                 <div className="icon">
                                     <FaEdit />
+                                </div>
+
+                                <div
+                                    className={
+                                        hide
+                                            ? 'theme_logout'
+                                            : 'theme_logout show'
+                                    }
+                                >
+                                    <h3>Dark mode</h3>
+                                    <div className="on">
+                                        <label htmlFor="dark">ON</label>
+                                        <input
+                                            type={'radio'}
+                                            value="dark"
+                                            id="dark"
+                                            name="theme"
+                                        />
+                                    </div>
+                                    <div className="of">
+                                        <label htmlFor="white">OFF</label>
+                                        <input
+                                            type={'radio'}
+                                            value="white"
+                                            id="white"
+                                            name="theme"
+                                        />
+                                    </div>
+
+                                    <div className="logout" onClick={logout}>
+                                        <FaSignOutAlt /> Logout
+                                    </div>
                                 </div>
                             </div>
                         </div>
