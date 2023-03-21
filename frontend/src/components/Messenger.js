@@ -312,8 +312,27 @@ const Messenger = () => {
     // DARKMODE
     useEffect(() => {
         dispatch(getTheme());
-    }, []);
+    }, [dispatch]);
 
+    // searchFriend khung chat
+    const searchFriend = (e) => {
+        const getFriendsClass = document.getElementsByClassName('hover-friend');
+        const friendNameClass = document.getElementsByClassName('Fd_name');
+        const getFrLength = getFriendsClass.length;
+        const friendNameLength = friendNameClass.length;
+
+        if (getFrLength === friendNameLength) {
+            for (let i = 0; i < getFrLength; i++) {
+                const text = friendNameClass[i].innerText.toLowerCase();
+                const checkIsText = text.includes(e.target.value.toLowerCase());
+                if (checkIsText) {
+                    getFriendsClass[i].style.display = '';
+                } else {
+                    getFriendsClass[i].style.display = 'none';
+                }
+            }
+        }
+    };
     return (
         <div className={themeMood === 'dark' ? 'messenger theme' : 'messenger'}>
             <Toaster
@@ -403,6 +422,7 @@ const Messenger = () => {
                                     placeholder="search"
                                     type={'text'}
                                     className="form-control"
+                                    onChange={searchFriend}
                                 />
                             </div>
                         </div>

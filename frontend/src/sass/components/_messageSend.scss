@@ -71,7 +71,7 @@
         display: flex;
         width: 70%;
         height: 40px;
-        background-color: #dfdfdf;
+        background-color: var(--search-bg);
         border-radius: 50px;
         border: none;
         align-items: center;
@@ -80,8 +80,9 @@
             width: 100%;
             border-bottom-left-radius: 50px;
             border-top-left-radius: 50px;
-            background-color: transparent;
+            color: var(--text-color);
             border: none;
+            background-color: var(--search-bg);
 
             &::placeholder {
                 color: var(--text-color);
