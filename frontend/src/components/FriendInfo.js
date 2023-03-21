@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaCaretSquareDown } from 'react-icons/fa';
 
-const FriendInfo = ({ friendInfo, acitveUser }) => {
+const FriendInfo = ({ friendInfo, acitveUser, message }) => {
     return (
         <div className="friend-info">
             <input type="checkbox" id="gallery" />
@@ -46,11 +46,18 @@ const FriendInfo = ({ friendInfo, acitveUser }) => {
             </div>
 
             <div className="gallery">
-                <img src="/image/5.jpg" alt="coverP" />
-                <img src="/image/5.jpg" alt="coverP" />
-                <img src="/image/5.jpg" alt="coverP" />
-                <img src="/image/5.jpg" alt="coverP" />
-                <img src="/image/5.jpg" alt="coverP" />
+                {message && message.length > 0
+                    ? message.map(
+                          (mess, index) =>
+                              mess.message.image && (
+                                  <img
+                                      key={index}
+                                      src={`/image/${mess.message.image}`}
+                                      alt="rightImg"
+                                  />
+                              )
+                      )
+                    : 'No image sent!'}
             </div>
         </div>
     );

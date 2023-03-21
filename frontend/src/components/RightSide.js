@@ -78,6 +78,7 @@ const RightSide = ({
                         <FriendInfo
                             friendInfo={currentFriends}
                             acitveUser={acitveUser}
+                            message={message}
                         />
                     </div>
                 </div>
