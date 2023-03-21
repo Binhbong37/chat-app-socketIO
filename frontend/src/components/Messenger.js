@@ -56,6 +56,7 @@ const Messenger = () => {
         mesageSendSuccess,
         message_get_success,
         themeMood,
+        new_user_add,
     } = useSelector((state) => state.messenger);
 
     const { myInfo } = useSelector((state) => state.auth);
@@ -65,7 +66,10 @@ const Messenger = () => {
     useEffect(() => {
         console.log('UE getFriends');
         dispatch(getFriends());
-    }, [dispatch]);
+        dispatch({
+            type: 'NEW_USER_ADD_CLEAR',
+        });
+    }, [dispatch, new_user_add]);
 
     // Get if have Friends
     useEffect(() => {
@@ -261,6 +265,15 @@ const Messenger = () => {
         socket.current.on('getUser', (users) => {
             const filterUser = users.filter((u) => u.userId !== myInfo.id);
             setActiveUser(filterUser);
+        });
+
+        socket.current.on('new_user_add', (data) => {
+            dispatch({
+                type: 'NEW_USER_ADD',
+                payload: {
+                    new_user_add: data,
+                },
+            });
         });
     }, []);
 
