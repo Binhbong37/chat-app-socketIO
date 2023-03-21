@@ -10,6 +10,8 @@ import {
     UPDATE,
     MESSAGE_GET_SUCCESS_CLEAR,
     SEEN_ALL,
+    THEME_GET_SUCCESS,
+    THEME_SET_SUCCESS,
 } from '../types/messengerType';
 
 const messengerState = {
@@ -112,17 +114,16 @@ export const messengerReducer = (state = messengerState, action) => {
             return {
                 ...state,
             };
+        case THEME_GET_SUCCESS:
+        case THEME_SET_SUCCESS:
+            return {
+                ...state,
+                themeMood: payload.theme,
+            };
 
         default:
             return state;
     }
-
-    //      if(type === 'THEME_GET_SUCCESS' || type === 'THEME_SET_SUCCESS'){
-    //           return {
-    //                ...state,
-    //                themeMood : payload.theme
-    //           }
-    //      }
 
     //      if(type === 'LOGOUT_SUCCESS'){
     //           return {
